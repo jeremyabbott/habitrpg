@@ -92,7 +92,7 @@ var UserSchema = new Schema({
   },
 
   balance: {type: Number, 'default':0},
-  filters: {type: Schema.Types.Mixed},
+  filters: {type: Schema.Types.Mixed, 'default': {}},
 
   purchased: {
     ads: {type: Boolean, 'default': false},
@@ -290,7 +290,7 @@ var UserSchema = new Schema({
   lastCron: {type: Date, 'default': Date.now},
 
   // {GROUP_ID: Boolean}, represents whether they have unseen chat messages
-  newMessages: {type: Schema.Types.Mixed},
+  newMessages: {type: Schema.Types.Mixed, 'default': {}},
 
   party: {
     // id // FIXME can we use a populated doc instead of fetching party separate from user?
@@ -420,7 +420,7 @@ var UserSchema = new Schema({
   inbox: {
     newMessages: {type:Number, 'default':0},
     blocks: {type: Array},
-    messages: {type: Schema.Types.Mixed}, //reflist
+    messages: {type: Schema.Types.Mixed, 'default':{}}, //reflist
     optOut: {type:Boolean, 'default':false}
   },
 
@@ -551,6 +551,8 @@ UserSchema.pre('save', function(next) {
 
       return newTask;
     }), next);
+  } else {
+    next();
   }
 });
 
